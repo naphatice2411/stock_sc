@@ -65,7 +65,8 @@
             '<div class="form-group">'.
                 '<label for="inputRemain" class="col-sm-2 control-label">จำนวนคงเหลือ</label>'.
                 '<div class="col-sm-10">'.
-                    '<input disabled type="text" class="form-control" id="inputRemainAmount" name="remainAmount" placeholder="คงเหลือ" value="'.$existData['remain_amount']." ".$unitname.'">'.
+                    '<input disabled type="text" class="form-control" id="inputRemainAmount" name="remainAmount" placeholder="คงเหลือ" 
+                    value="'.$existData['remain_amount']." ".$unitname."   ( คุณไม่สามารถสั่งได้เกิน ".($existData['max']-$existData['remain_amount'])." ".$unitname." )".'">'.
                 '</div>'.
             '</div>'.
 

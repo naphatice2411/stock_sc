@@ -1,6 +1,7 @@
 <?php
     $remainAmount=selectTb('supplies','remain_amount','id="'.$_POST['supplies_id'].'"');
     $remainAmount=$remainAmount[0]['remain_amount'];
+    if($_POST['Line']!=""){
     if($_POST['amount']!=""&&$_POST['amount']!=0){
         if($_POST['amount']<=$remainAmount){
             $_SESSION['cart'][$_POST['supplies_id']]=array(
@@ -18,7 +19,10 @@
         $code=404;
         $status="กรุณากรอกจำนวนที่ต้องการเบิก";
     }
-    
+}else {
+    $code=400;
+    $status="กรุณากรอกข้อมูลให้ครบถ้วน";
+}
     $ret=array(
         code=>$code,
         status=>$status,
