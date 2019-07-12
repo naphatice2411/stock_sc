@@ -5,8 +5,6 @@ function genPendingTbody()
     $res = "";
     $data = selectTb('order', 'id,pic,name,amount,unit,line,remark,is_pending', 'is_userconfirm=0 and user_id="' . current_user('user_id') . '"');
     foreach ($data as $k) {
-        $pending = $k['is_pending'] == 1 ? "รอสั่งของ" : "ของมาแล้ว";
-        $disabled = $k['is_pending'] == 1 ? " disabled " : " ";
         $res .= "<tr>" .
             "<td style='width: 10%'><div class='img-with-text'><img src='" . site_url("system/pictures/spare/" . $k['pic'], true) . "'" .
             "border='3' height='100' width='100' alt=''></img></div></td>" .
@@ -26,7 +24,11 @@ function genPendingTbody()
                     </ul>
                 </div>'.
             "</td>" .
-            "<td><button></button></td>".
+            "<td><button id='pendingStatus' value='".$k['id']."'";
+                if($k['is_pending']==1)$res.=" class='btn btn-warning'><i class='fa fa-hand-stop-o'></i>รอสั่งของ</button>";
+                else if($k['is_pending']==0)$res.=" class='btn btn-info'><i class='fa fa-hand-stop-o'></i>ของมาแล้ว</button>";
+            $res.="</td>".
+            "<td><button class='btn btn-danger'><span class='fa fa-trash'></span></button></td>".
             "</tr>";
     }
     return $res;
@@ -84,5 +86,18 @@ function genPendingTbody()
     $('#tbData').DataTable();
     $('ul#btnAction li').on('click',function(e){
         alert(this.value);
+    });
+
+    $('[id="pendingStatus"]').on('click',function(){
+        var t=$(this);
+        t.html("<i id='iconStatus'></i>...");
+        $('[id="iconStatus"]').removeClass().addClass('fa fa-refresh fa-spin');
+        $.post('<?php print site_url('ajax/admin/approve/changePending')?>',{
+            id: this.value
+        },function(data){
+            console.log(data);
+            t.html(data.html);
+            t.removeClass().addClass(data.class);
+        },"json");
     });
 </script>
