@@ -66,6 +66,13 @@ $mainMenu['adminMenu'] = array(
             'cond' => '',
 
         ),
+        'approve' => array(
+            'bullet' => 'fa fa-check-square',
+            'title' => 'อนุมัติคำสั่งซื้อ',
+            'url' => 'main/admin/approve/index',
+            'cond' => '',
+
+        ),
         
     ),
 );

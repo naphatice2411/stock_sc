@@ -12,7 +12,9 @@
                 'remark'=>"'".$_POST['remark']."'",
                 'pic'=>"'".$existData[0]['pic']."'",
                 'is_pending'=>1,
-                'is_confirm'=>0
+                'is_adminconfirm'=>0,
+                'is_userconfirm'=>0,
+                'user_id'=>current_user('user_id')
             );
             $isInserted=insertTb('order',$insertOrder);
             $status=$isInserted?"เพิ่มข้อมูลเรียบร้อยแล้ว":"ไม่สามารถเพิ่มข้อมูลได้";
@@ -32,7 +34,9 @@
             'remark'=>"'".$_POST['remark']."'",
             'pic'=>"'noimage.png'",
             'is_pending'=>1,
-            'is_confirm'=>0
+            'is_adminconfirm'=>0,
+            'is_userconfirm'=>0,
+            'user_id'=>current_user('user_id')
         );
         $isInserted=insertTb('order',$insertOrder);
         $status=$isInserted?"เพิ่มข้อมูลเรียบร้อยแล้ว":"ไม่สามารถบันทึกได้ คุณกรอกข้อมูลไม่ครบ";

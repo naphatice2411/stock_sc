@@ -26,7 +26,7 @@ function genTbody($hasFilter=false){
                     "<td style='width: 10%; text-align:center;'>".$k['remain_amount']."</td>".
                     "<td style='width: 10%; text-align:center;'>".getUnit($k['unit'])."</td>".
                     "<td style='width: 10%; text-align:center;'>";
-                    $disabled=($k['remain_amount']>=$k['max']||count(selectTb('order','*','supid="'.$k['id'].'" AND is_confirm=0')))?" disabled ":" ";
+                    $disabled=($k['remain_amount']>=$k['max']||count(selectTb('order','*','supid="'.$k['id'].'" AND is_adminconfirm=0 AND user_id="'.current_user('user_id').'"')))?" disabled ":" ";
 
                         $res.=
                             "<a href='#orderAmount' data-toggle='tab'>
@@ -62,7 +62,7 @@ $ret=genTbody(isset($_POST['Group'])&&$_POST['Group']!="def");
 
 function genPendingTbody(){
     $res="";
-    $data=selectTb('order','id,pic,name,amount,unit,line,remark,is_pending','is_confirm=0');
+    $data=selectTb('order','id,pic,name,amount,unit,line,remark,is_pending','is_userconfirm=0 and user_id="'.current_user('user_id').'"');
     foreach($data as $k){
         $pending=$k['is_pending']==1?"รอสั่งของ":"ของมาแล้ว";
         $disabled=$k['is_pending']==1?" disabled ":" ";
