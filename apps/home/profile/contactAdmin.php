@@ -1,0 +1,9 @@
+ติดต่อผู้ดูแลระบบเพื่อเข้าใช้งานระบบ
+<?php
+    load_fun('tinyDB');
+    $chAcc=[
+        'active'=>'"N"',
+        'default_uri'=>'""'
+    ];
+    updateTb('userdata',$chAcc,'user_id="'.current_user('user_id').'"',true);
+    redirect('main/home/user/logoff',false,3);
