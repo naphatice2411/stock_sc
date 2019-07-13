@@ -23,8 +23,8 @@ function genPendingTbody()
                         <span class="caret"></span>
                     </button>
                     <ul id="btnAction" class="dropdown-menu" role="menu">
-                        <li name="approve" value="'.$k['id'].'">อนุมัติ</li>
-                        <li name="notApprove" value="'.$k['id'].'">ไม่อนุมัติ</li>
+                        <li name="approve" value="'.$k['id'].'"><a class="liAction">อนุมัติ</a></li>
+                        <li name="notApprove" value="'.$k['id'].'"><a class="liAction">ไม่อนุมัติ</a></li>
                     </ul>
                   </div>';
             else{
@@ -68,6 +68,7 @@ function getUserName($id)
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-12">
+                    <div class="box-body table-responsive">
                         <table class="table table-bordered table-striped" id="tbData">
                             <thead>
                                 <tr>
@@ -86,9 +87,20 @@ function getUserName($id)
                                 <?php print $pendingOrder = genPendingTbody(); ?>
                             </tbody>
                             <tfoot>
-
+                                <tr>
+                                    <th style='width: 10%; text-align: center;'>รูป</th>
+                                    <th style='width: 15%; text-align: center;'>ชื่อ</th>
+                                    <th style='width: 10%; text-align: center;'>จำนวน</th>
+                                    <th style='width: 10%; text-align: center;'>หน่วยนับ</th>
+                                    <th style='width: 10%; text-align: center;'>ไลน์</th>
+                                    <th style='width: 15%; text-align: center;'>ชื่อผู้สั่ง</th>
+                                    <th style='width: 15%; text-align: center;'>ตอบรับ</th>
+                                    <th style="width: 10%; text-align: center;">สถานะ</th>
+                                    <th style="width: 5%; text-align: center;">ลบ</th>
+                                </tr>
                             </tfoot>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,7 +138,9 @@ function getUserName($id)
                 $('#saveAlert p').text(res.status);
                 $('#saveAlert').attr('class','callout callout-info');
                 $("html, body").animate({scrollTop: 0}, 1000);
-                $('#saveAlert').slideDown('slow').delay(1000).slideUp(400,reload());
+                $('#saveAlert').slideDown('slow').delay(1000).slideUp(400,function(){
+                    window.location.href=window.location;
+                });
             }else{
                 $('#saveAlert h4').html('<i class=\"icon fa fa-info\"></i> Warning!');
                 $('#saveAlert p').text(res.status);
@@ -147,7 +161,9 @@ function getUserName($id)
             console.log(data);
             t.html(data.html);
             t.removeClass().addClass(data.class);
-            setTimeout(reload(), 1000);
+            setTimeout(function(){
+                window.location.href=window.location;
+            }, 1000);
         }, "json");
     });
 
@@ -161,7 +177,9 @@ function getUserName($id)
                 $('#saveAlert p').text(res.status);
                 $('#saveAlert').attr('class','callout callout-info');
                 $("html, body").animate({scrollTop: 0}, 1000);
-                $('#saveAlert').slideDown('slow').delay(1000).slideUp(400,reload());
+                $('#saveAlert').slideDown('slow').delay(1000).slideUp(400,function(){
+                    window.location.href=window.location;
+                });
             }else{
                 $('#saveAlert h4').html('<i class=\"icon fa fa-info\"></i> Warning!');
                 $('#saveAlert p').text(res.status);
@@ -172,11 +190,7 @@ function getUserName($id)
         },"json");
     });
 
-    function reload(){
-        window.location.href=window.location;
-    }
-
-    $("a").click(function(e){
+    $("a.liAction").click(function(e){
         e.preventDefault();
     });
 </script>
