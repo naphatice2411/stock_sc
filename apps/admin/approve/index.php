@@ -3,33 +3,42 @@ $title = "อนุมัติรายการสั่งซื้อ";
 function genPendingTbody()
 {
     $res = "";
-    $data = selectTb('order', 'id,pic,name,amount,unit,line,remark,is_pending,user_id', 'is_adminconfirm=0');
+    $data = selectTb('order', 'id,pic,name,amount,unit,line,remark,is_pending,user_id,is_approve', 'is_adminconfirm=0');
     foreach ($data as $k) {
+        $pendingDisabled=$k['is_approve']!=1?" disabled":" ";
+        $deleteDisabled=($k['is_approve']==1&&$k['is_pending']==1)||$k['is_approve']==null?" disabled":" ";
         $res .= "<tr>" .
             "<td style=''><div class='img-with-text'><img src='" . site_url("system/pictures/spare/" . $k['pic'], true) . "'" .
             "border='3' height='100' width='100' alt=''></img></div></td>" .
-            "<td style='word-wrap: break-word;'>" . $k['name'] . "</td>" .
-            "<td style='text-align:center; word-wrap: break-word;'>" . $k['amount'] . "</td>" .
-            "<td style='text-align:center;'>" . $k['unit'] . "</td>" .
-            "<td style='text-align:center;'>" . $k['line'] . "</td>" .
-            "<td style='text-align: center;'>" . getUserName($k['user_id']) . "</td>" .
-            "<td style='text-align:center;'>" .
-            '<div class="btn-group">
+            "<td style='vertical-align: middle; word-wrap: break-word;'>" . $k['name'] . "</td>" .
+            "<td style='vertical-align: middle; text-align:center; word-wrap: break-word;'>" . $k['amount'] . "</td>" .
+            "<td style='vertical-align: middle; text-align:center;'>" . $k['unit'] . "</td>" .
+            "<td style='vertical-align: middle; text-align:center;'>" . $k['line'] . "</td>" .
+            "<td style='vertical-align: middle; text-align: center;'>" . getUserName($k['user_id']) . "</td>" .
+            "<td style='vertical-align: middle; text-align:center;'>";
+            if($k['is_approve']==null)
+            $res.='<div class="btn-group">
                     <button class="btn btn-default" type="button">ตอบรับ</button>
                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                         <span class="caret"></span>
                     </button>
                     <ul id="btnAction" class="dropdown-menu" role="menu">
-                        <li value="approve"><a href="#">อนุมัติ</a></li>
-                        <li value="notApprove"><a href="#">ไม่อนุมัติ</a></li>
+                        <li name="approve" value="'.$k['id'].'">อนุมัติ</li>
+                        <li name="notApprove" value="'.$k['id'].'">ไม่อนุมัติ</li>
                     </ul>
-                </div>' .
-            "</td>" .
-            "<td><button id='pendingStatus' value='" . $k['id'] . "'";
+                  </div>';
+            else{
+                $res.="<button disabled ";
+                if($k['is_approve']==1)$res.="class='btn btn-success'>อนุมัติแล้ว";
+                else $res.="class='btn btn-danger'>ไม่อนุมัติ";
+                $res.="</button>";
+            }
+            $res.="</td>" .
+            "<td style='vertical-align: middle; text-align: center;'><button ".$pendingDisabled." id='pendingStatus' value='" . $k['id'] . "'";
         if ($k['is_pending'] == 1) $res .= " class='btn btn-warning'><i class='fa fa-hand-stop-o'></i>รอสั่งของ</button>";
         else if ($k['is_pending'] == 0) $res .= " class='btn btn-info'><i class='fa fa-hand-stop-o'></i>ของมาแล้ว</button>";
         $res .= "</td>" .
-            "<td><button class='btn btn-danger'><span class='fa fa-trash'></span></button></td>" .
+            "<td style='vertical-align: middle; text-align: center;'><button".$deleteDisabled." id='btnDelete' value='".$k['id']."' class='btn btn-danger'><span class='fa fa-trash'></span></button></td>" .
             "</tr>";
     }
     return $res;
@@ -41,6 +50,15 @@ function getUserName($id)
 }
 ?>
 <link href="<?php print site_url('system/template/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css', true); ?>" rel="stylesheet">
+
+<div class="callout callout-info" id="saveAlert">
+
+    <h4><i class="icon fa fa-info"></i> บันทึก!</h4>
+
+    <p>บันทึกข้อมูลเรียบร้อยแล้ว.</p>
+
+</div>
+
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -59,8 +77,8 @@ function getUserName($id)
                                     <th style='width: 10%; text-align: center;'>หน่วยนับ</th>
                                     <th style='width: 10%; text-align: center;'>ไลน์</th>
                                     <th style='width: 15%; text-align: center;'>ชื่อผู้สั่ง</th>
-                                    <th style='width: 20%; text-align: center;'>ตอบรับ</th>
-                                    <th style="width: 5%; text_align: center;">สถานะ</th>
+                                    <th style='width: 15%; text-align: center;'>ตอบรับ</th>
+                                    <th style="width: 10%; text-align: center;">สถานะ</th>
                                     <th style="width: 5%; text-align: center;">ลบ</th>
                                 </tr>
                             </thead>
@@ -92,11 +110,31 @@ function getUserName($id)
             null,
             null,
             null,
-            null
+            {"orderable": false}
         ]
     });
+    $('#saveAlert').hide();
     $('ul#btnAction li').on('click', function(e) {
-        alert(this.value);
+        e.preventDefault();
+        $.post('<?php print site_url('ajax/admin/approve/changeApproveSt');?>',{
+            isApprove: $(this).attr('name')=="approve"?1:0,
+            id:$(this).val()
+        },function(res){
+            console.log(res);
+            if(res.code===200){
+                $('#saveAlert h4').html('<i class=\"icon fa fa-info\"></i> Warning!');
+                $('#saveAlert p').text(res.status);
+                $('#saveAlert').attr('class','callout callout-info');
+                $("html, body").animate({scrollTop: 0}, 1000);
+                $('#saveAlert').slideDown('slow').delay(1000).slideUp(400,reload());
+            }else{
+                $('#saveAlert h4').html('<i class=\"icon fa fa-info\"></i> Warning!');
+                $('#saveAlert p').text(res.status);
+                $('#saveAlert').attr('class','callout callout-danger');
+                $("html, body").animate({scrollTop: 0}, 1000);
+                $('#saveAlert').slideDown('slow').delay(1000).slideUp();
+            }
+        },"json");
     });
 
     $('[id="pendingStatus"]').on('click', function() {
@@ -109,6 +147,36 @@ function getUserName($id)
             console.log(data);
             t.html(data.html);
             t.removeClass().addClass(data.class);
+            setTimeout(reload(), 1000);
         }, "json");
+    });
+
+    $('[id="btnDelete"]').on('click',function(){
+        $.post('<?php print site_url('ajax/admin/approve/hideFromAdmin');?>',{
+            id: this.value
+        },function(res){
+            console.log(res);
+            if(res.code===200){
+                $('#saveAlert h4').html('<i class=\"icon fa fa-info\"></i> Warning!');
+                $('#saveAlert p').text(res.status);
+                $('#saveAlert').attr('class','callout callout-info');
+                $("html, body").animate({scrollTop: 0}, 1000);
+                $('#saveAlert').slideDown('slow').delay(1000).slideUp(400,reload());
+            }else{
+                $('#saveAlert h4').html('<i class=\"icon fa fa-info\"></i> Warning!');
+                $('#saveAlert p').text(res.status);
+                $('#saveAlert').attr('class','callout callout-danger');
+                $("html, body").animate({scrollTop: 0}, 1000);
+                $('#saveAlert').slideDown('slow').delay(1000).slideUp();
+            }
+        },"json");
+    });
+
+    function reload(){
+        window.location.href=window.location;
+    }
+
+    $("a").click(function(e){
+        e.preventDefault();
     });
 </script>
