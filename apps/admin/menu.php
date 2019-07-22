@@ -17,16 +17,22 @@ $mainMenu['adminMenu'] = array(
     'title' => 'ดูเลระบบ',
     'cond' => true,
     'item' => array(
-        'manage' => array('bullet' => 'fa fa-file',
+        'report' => array('bullet' => 'fa fa-file',
             'title' => 'รายงาน',
             'url' => '',
             'cond' => true,
-            'item' => array('general' => array(
+            'item' => array(
+                'remainAmount' => array(
                     'bullet' => 'fa fa-wrench',
-                    'title' => 'ตั้งค่าทั่วไป',
-                    'url' => 'main/admin/manage/general',
+                    'title' => 'รายงานยอดคงเหลือ',
+                    'url' => 'main/admin/report/remain',
                     'cond'=>'',
                     'num'=>'',
+                ),
+                'transaction'=>array(
+                    'bullet'=>'fa fa-wrench',
+                    'title'=>'รายงานการเคลื่อนไหว',
+                    'url'=>'main/admin/report/transac',
                 ),
             ),
         ),
