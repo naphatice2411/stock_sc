@@ -1,6 +1,6 @@
 <?php
     $updateData=array(
-        'is_confirm'=>1,
+        'is_userconfirm'=>1,
     );
 
     $isUpdated=updateTb('order',$updateData,'id="'.$_POST['id'].'"');

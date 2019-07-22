@@ -62,10 +62,17 @@ $ret=genTbody(isset($_POST['Group'])&&$_POST['Group']!="def");
 
 function genPendingTbody(){
     $res="";
-    $data=selectTb('order','id,pic,name,amount,unit,line,remark,is_pending','is_userconfirm=0 and user_id="'.current_user('user_id').'"');
+    $data=selectTb('order','id,pic,name,amount,unit,line,remark,is_pending,is_adminconfirm,is_approve','is_userconfirm=0 and user_id="'.current_user('user_id').'"');
+    // print_r($data);
     foreach($data as $k){
-        $pending=$k['is_pending']==1?"รอสั่งของ":"ของมาแล้ว";
-        $disabled=$k['is_pending']==1?" disabled ":" ";
+        if($k['is_approve']!=""&&$k['is_approve']==0){
+            $pending="ไม่อนุมัติ";
+            $disabled=" ";
+        }
+        else{
+            $pending=$k['is_pending']==1?"รอสั่งของ":"ของมาแล้ว";
+            $disabled=$k['is_pending']==1?" disabled ":" ";
+        }
         $res.="<tr>".
                     "<td style='width: 10%'><div class='img-with-text'><img src='".site_url("system/pictures/spare/".$k['pic'],true)."'".
                         "border='3' height='100' width='100' alt=''></img></div></td>".
