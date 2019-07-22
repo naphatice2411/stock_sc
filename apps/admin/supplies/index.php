@@ -114,6 +114,7 @@ if(isset($_POST['Group']))$ret=genTbody();
         margin: 0 auto;
     }
 </style>
+<link href="<?php print site_url('system/template/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css',true);?>" rel="stylesheet">
 
 <!-- Main content -->
 
