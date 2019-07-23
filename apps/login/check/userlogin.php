@@ -19,7 +19,7 @@
   $ret=array(
     code=>$code,
     status=>$status,
-    url=>$url
+    url=>site_url($url)
   );
 
   echo json_encode($ret);
