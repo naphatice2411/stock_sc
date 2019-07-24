@@ -5,6 +5,11 @@ $mainMenu['userMenu'] = array(
     'class' => 'header',
     'cond' => true,
     'item' => array(
+        'dashboard'=>array(
+            'bullet'=>'fa fa-home',
+            'title'=>'Dashboard',
+            'url'=>'main/main/dashboard/index',
+        ),
         'profile' => array(
             'bullet' => 'fa fa-street-view', //กำหนดสัญลักษณ์หน้าตัวหนังสือ
             'title' => 'โปรไฟล์', //ชื่อแถบใช้งาน

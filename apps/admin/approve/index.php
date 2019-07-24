@@ -1,4 +1,5 @@
 <?php
+if(current_user('user_type')!='administrator')redirect(current_user('default_uri'));
 $title = "อนุมัติรายการสั่งซื้อ";
 function genPendingTbody()
 {
