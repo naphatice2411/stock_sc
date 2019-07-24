@@ -143,7 +143,7 @@ $pendingOrder=genPendingTbody();
                     <div class="box-header">
                     <a href="#orderAmount" data-toggle="tab"><button class="btn btn-info" id="orderNew"><span class ='fa fa-shopping-cart'></span>&nbsp;&nbsp;สั่งซื้อวัสดุใหม่</button></a>
                     </div>
-                    <form class="form-horizontal" method="post" action="<?php print site_url('main/home/withdraw/index'); ?>" id="selectGroup">
+                    <form class="form-horizontal" method="post" action="<?php print site_url('main/home/withdraw/orderindex'); ?>" id="selectGroup">
                         <div class="form-group" >
                             <label for="inputPos" class="col-sm-2 control-label">เลือกหมวดหมู่ของวัสดุ</label>
                             <div class="col-sm-10">
