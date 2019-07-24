@@ -1,5 +1,5 @@
 <?php
-$normalAmount = selectTb('supplies', 'count(*)', 'statusid="1"')[0]['count(*)'];
+$normalAmount = selectTb('supplies', 'count(*)', 'statusid="1" OR statusid="3"')[0]['count(*)'];
 $almostEmp = selectTb('supplies', 'count(*)', 'statusid="3"')[0]['count(*)'];
 $Empty = selectTb('supplies', 'count(*)', 'statusid="2"')[0]['count(*)'];
 ?>
