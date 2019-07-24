@@ -10,7 +10,7 @@
   $password=md5(trim($_POST['password']));
   $data=selectTb('userdata','*','username="'.$username.'" AND password="'.$password.'" limit 1');
   if(!count($data)){
-      $status='ชื่อผู้ใช้และ/หรือรหัสผ่านไม่ถูกต้อง';
+      $status='ชื่อผู้ใช้/รหัสผ่านไม่ถูกต้อง';
       $code=400;
   }else{
     $userdata=$data[0];

@@ -1,6 +1,6 @@
 <?php
 
-$title = "วัสดุ";
+$title = "สั่งวัสดุเพิ่มเติม";
 
 $siteName_data = getConfig('siteName', 'detail');
 
@@ -141,7 +141,7 @@ $pendingOrder=genPendingTbody();
 
                 <div class="active tab-pane" id="display">
                     <div class="box-header">
-                    <a href="#orderAmount" data-toggle="tab"><button class="btn btn-info" id="orderNew"><span class ='fa fa-shopping-cart'></span>&nbsp;&nbsp;สั่งซื้อวัสดุใหม่</button></a>
+                    <a href="#orderAmount" data-toggle="tab"><button class="btn btn-danger" id="orderNew"><span class ='fa fa-shopping-cart'></span>&nbsp;&nbsp;สั่งซื้อวัสดุใหม่ ( ยังไม่มีบันทึกอยู่ในระบบ )</button></a>
                     </div>
                     <form class="form-horizontal" method="post" action="<?php print site_url('main/home/withdraw/orderindex'); ?>" id="selectGroup">
                         <div class="form-group" >

@@ -7,7 +7,7 @@ $title = "รายงานยอดคงเหลือ";
     <div class="col-md-12">
         <div id="yearPicker" class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">ปีการศึกษาที่ต้องการตรวจสอบพัสดุ</h3>
+                <h3 class="box-title">เลือกรายงานที่ต้องการตรวจสอบ</h3>
                 <div class="box-tools pull-right">
                     <button id="btnYearPicker" type="button" class="btn btn-box-tool" data-widget="collapse"><i id="plusMinus" class="fa fa-minus"></i></button>
                 </div>
@@ -55,7 +55,7 @@ $title = "รายงานยอดคงเหลือ";
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">อนุมัติรายการ</h3>
+                <h3 class="box-title">รายงาน</h3>
                 <button id="dlPdf" class="btn btn-sm btn-danger pull-right" disabled><i class="fa fa-file-pdf-o"></i> Download</button>
             </div>
             <div class="box-body">

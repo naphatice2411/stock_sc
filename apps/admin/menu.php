@@ -23,14 +23,14 @@ $mainMenu['adminMenu'] = array(
             'cond' => true,
             'item' => array(
                 'remainAmount' => array(
-                    'bullet' => 'fa fa-wrench',
+                    'bullet' => 'fa fa-file-pdf-o',
                     'title' => 'รายงานยอดคงเหลือ',
                     'url' => 'main/admin/report/remain',
                     'cond'=>'',
                     'num'=>'',
                 ),
                 'transaction'=>array(
-                    'bullet'=>'fa fa-wrench',
+                    'bullet'=>'fa fa-file-pdf-o',
                     'title'=>'รายงานการเคลื่อนไหว',
                     'url'=>'main/admin/report/transac',
                 ),
