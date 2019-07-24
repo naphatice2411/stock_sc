@@ -50,14 +50,19 @@
         }
     }else{
         if((!$template&&!$app&&!$function&&!$file)||(current_user('user_id')&&$app=="login")){
+            define('SITE_URL', get_system_config('siteURL'));
             if(current_user('default_uri')&&current_user('user_id')){
-                define('SITE_URL', get_system_config('siteURL'));
                 redirect(current_user('default_uri'));
             }else{
-                if(!$template)$template='main';
-                if(!$app)$app='main';
-                if(!$function)$function='dashboard';
-                if(!$file)$file='index';    
+                // print(current_user('user_id'));
+                // if(!$template)
+                $template='main';
+                // if(!$app)
+                $app='main';
+                // if(!$function)
+                $function='dashboard';
+                // if(!$file)
+                $file='index';    
             }
         }
     }
