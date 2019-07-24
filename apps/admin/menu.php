@@ -11,6 +11,8 @@ $numAllUser = $allUser[0]['count(*)'];
 $blockedUser = selectTb('userdata', 'count(*)', 'active="B"');
 $numAllblockedUser = $blockedUser[0]['count(*)'];
 
+$numApprove=selectTb('order','count(*)','is_approve IS NULL')[0]['count(*)'];
+
 
 $mainMenu['adminMenu'] = array(
     'class' => "header",
@@ -77,6 +79,7 @@ $mainMenu['adminMenu'] = array(
             'title' => 'อนุมัติคำสั่งซื้อ',
             'url' => 'main/admin/approve/index',
             'cond' => '',
+            'num'=>$numApprove,
 
         ),
         

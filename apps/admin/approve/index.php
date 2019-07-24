@@ -12,7 +12,7 @@ function genPendingTbody()
             "<td style=''><div class='img-with-text'><img src='" . site_url("system/pictures/spare/" . $k['pic'], true) . "'" .
             "border='3' height='100' width='100' alt=''></img></div></td>" .
             "<td style='vertical-align: middle; word-wrap: break-word;'>" . $k['name'] . "</td>" .
-            "<td style='vertical-align: middle; text-align:center; word-wrap: break-word;'>" . $k['amount'] . "</td>" .
+            "<td id='amount' value='".$k['amount']."' style='vertical-align: middle; text-align:center; word-wrap: break-word;'>" . $k['amount'] . "</td>" .
             "<td style='vertical-align: middle; text-align:center;'>" . $k['unit'] . "</td>" .
             "<td style='vertical-align: middle; text-align:center;'>" . $k['line'] . "</td>" .
             "<td style='vertical-align: middle; text-align: center;'>" . getUserName($k['user_id']) . "</td>" .
@@ -24,8 +24,8 @@ function genPendingTbody()
                         <span class="caret"></span>
                     </button>
                     <ul id="btnAction" class="dropdown-menu" role="menu">
-                        <li name="approve" value="'.$k['id'].'"><a class="liAction">อนุมัติ</a></li>
-                        <li name="notApprove" value="'.$k['id'].'"><a class="liAction">ไม่อนุมัติ</a></li>
+                        <li name="approve" value="'.$k['id'].'"><a class="liAction" href="#">อนุมัติ</a></li>
+                        <li name="notApprove" value="'.$k['id'].'"><a class="liAction" href="#">ไม่อนุมัติ</a></li>
                     </ul>
                   </div>';
             else{
@@ -35,9 +35,9 @@ function genPendingTbody()
                 $res.="</button>";
             }
             $res.="</td>" .
-            "<td style='vertical-align: middle; text-align: center;'><button ".$pendingDisabled." id='pendingStatus' value='" . $k['id'] . "'";
+            "<td style='vertical-align: middle; text-align: center;'><button ".$pendingDisabled." id='pendingStatus' value='" . json_encode(array(id=>$k['id'],amount=>$k['amount'])) . "'";
         if ($k['is_pending'] == 1) $res .= " class='btn btn-warning'><i class='fa fa-hand-stop-o'></i>รอสั่งของ</button>";
-        else if ($k['is_pending'] == 0) $res .= " class='btn btn-info'><i class='fa fa-hand-stop-o'></i>ของมาแล้ว</button>";
+        else if ($k['is_pending'] == 0) $res .= " class='btn btn-info' disabled><i class='fa fa-hand-stop-o'></i>ของมาแล้ว</button>";
         $res .= "</td>" .
             "<td style='vertical-align: middle; text-align: center;'><button".$deleteDisabled." id='btnDelete' value='".$k['id']."' class='btn btn-danger'><span class='fa fa-trash'></span></button></td>" .
             "</tr>";
@@ -133,7 +133,7 @@ function getUserName($id)
             isApprove: $(this).attr('name')=="approve"?1:0,
             id:$(this).val()
         },function(res){
-            console.log(res);
+            // console.log(res);
             if(res.code===200){
                 $('#saveAlert h4').html('<i class=\"icon fa fa-info\"></i> Warning!');
                 $('#saveAlert p').text(res.status);
@@ -157,22 +157,23 @@ function getUserName($id)
         t.html("<i id='iconStatus'></i>...");
         $('[id="iconStatus"]').removeClass().addClass('fa fa-refresh fa-spin');
         $.post('<?php print site_url('ajax/admin/approve/changePending') ?>', {
-            id: this.value
+            val: this.value,
         }, function(data) {
-            console.log(data);
+            // console.log(data);
             t.html(data.html);
             t.removeClass().addClass(data.class);
+            t.attr('disabled',true);
             setTimeout(function(){
                 window.location.href=window.location;
             }, 1000);
-        }, "json");
+        },"json");
     });
 
     $('[id="btnDelete"]').on('click',function(){
         $.post('<?php print site_url('ajax/admin/approve/hideFromAdmin');?>',{
             id: this.value
         },function(res){
-            console.log(res);
+            // console.log(res);
             if(res.code===200){
                 $('#saveAlert h4').html('<i class=\"icon fa fa-info\"></i> Warning!');
                 $('#saveAlert p').text(res.status);

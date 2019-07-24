@@ -63,7 +63,8 @@ if($type==1){
         if($k['is_approve']){
             if($k['is_pending'])$status="รอสั่งของ";
             else $status="ของมาแล้ว";
-        }else $status="ไม่อนุมัติ";
+        }else if($k['is_approve']==null)$status="รออนุมัติ";
+        else $status="ไม่อนุมัติ";
         $sid=getSuppliesData($k['supid'],'sid')?:" - ";
         $html.='<tr>';
         $html.=

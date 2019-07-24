@@ -26,7 +26,7 @@ function genTbody($hasFilter=false){
                     "<td style='width: 10%; text-align:center;'>".$k['remain_amount']."</td>".
                     "<td style='width: 10%; text-align:center;'>".getUnit($k['unit'])."</td>".
                     "<td style='width: 10%; text-align:center;'>";
-                    $disabled=($k['remain_amount']>=$k['max']||count(selectTb('order','*','supid="'.$k['id'].'" AND (is_adminconfirm=0 OR is_userconfirm=0) AND user_id="'.current_user('user_id').'"')))?" disabled ":" ";
+                    $disabled=($k['remain_amount']>=$k['max']||count(selectTb('order','*','supid="'.$k['id'].'" AND (is_userconfirm=0) AND user_id="'.current_user('user_id').'"')))?" disabled ":" ";
 
                         $res.=
                             "<a href='#orderAmount' data-toggle='tab'>
