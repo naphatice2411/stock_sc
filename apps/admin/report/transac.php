@@ -178,7 +178,7 @@ $title = "รายงานยอดคงเหลือ";
             if (res.code === 200) {
                 $('#dlPdf').html(oldHtml);
                 newlink = document.createElement('a');
-                newlink.setAttribute('download','download');
+                newlink.setAttribute('download',res.name);
                 newlink.setAttribute('href', res.pdf);
                 newlink.click();
                 newlink.remove();

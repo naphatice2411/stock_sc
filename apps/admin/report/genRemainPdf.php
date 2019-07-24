@@ -62,11 +62,13 @@ $html.='</table>';
 
 load_fun('mpdf');
 
-$success=($pdfAddr=genPdf($html));
+$pdfAddr=genPdf($html);
+$pdfName=substr($pdfAddr,36,-4);
 
 $ret=array(
     'code'=>$pdfAddr?200:400,
-    'pdf'=>$pdfAddr
+    'pdf'=>$pdfAddr,
+    'name'=>$pdfName
 );
 
 echo json_encode($ret);
