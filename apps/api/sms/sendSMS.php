@@ -12,7 +12,7 @@ if(count($userID)){
     $userID=$userID[0]['user_id'];
 //    print($userID);
 }else{
-    print 'ชื่อผู้ใช้และ/หรือรหัสผ่านไม่ถูกต้อง<br>';
+    print 'ชื่อผู้ใช้/รหัสผ่านไม่ถูกต้อง<br>';
     exit();
 }
 

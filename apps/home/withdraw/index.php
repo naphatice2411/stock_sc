@@ -1,6 +1,6 @@
 <?php
 
-$title = "จัดการวัสดุ";
+$title = "เบิกวัสดุจากระบบ";
 
 $siteName_data = getConfig('siteName', 'detail');
 

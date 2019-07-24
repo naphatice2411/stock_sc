@@ -62,7 +62,7 @@
 
         <input name="username" id="username" type="username" class="form-control" placeholder="ชื่อผู้ใช้">
 
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
       </div>
 

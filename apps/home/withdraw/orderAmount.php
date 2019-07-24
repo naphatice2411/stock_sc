@@ -124,7 +124,7 @@
             '<div class="form-group">'.
                 '<label for="inputName" class="col-sm-2 control-label">ชื่อวัสดุ</label>'.
                 '<div class="col-sm-10">'.
-                    '<input type="text" class="form-control" id="inputNamesup" name="name" placeholder="ชื่อวัสดุ" value="'.$existData['name'].'">'.
+                    '<input autocomplete="off" type="text" class="form-control" id="inputNamesup" name="name" placeholder="ชื่อวัสดุ" value="'.$existData['name'].'">'.
                 '</div>'.
             '</div>'.
             
